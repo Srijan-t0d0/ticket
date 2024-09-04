@@ -15,7 +15,7 @@ export default function home (){
     <main className="flex justify-center items-center h-screen w-screen bg-cover bg-center lg:bg-[url('/Home_16_9.webp')] bg-[url('/Home_9_16.webp')]">
       <div className="flex flex-col items-center gap-5">
         <Image alt="LOGO" className="" src={'/logo.png'} width={250} height={250} />
-        <div className="text-3xl text-center lg:text-4xl text-white ">PRESENTS</div>
+        <div className=" text-center text-xl text-white ">PRESENTS</div>
         <div className="text-3xl text-center lg:text-4xl text-white ">
           A SECRET<br />
           <span className="font-bold text-8xl lg:text-[7rem] text-[#fdcc69]">MOVIE<br />NIGHT</span>
