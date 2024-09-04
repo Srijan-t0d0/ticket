@@ -6,7 +6,7 @@ import { IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import { stringify } from "querystring";
 import { useState } from "react";
 
-export default function page (){
+export default function PAGE() {
   const [data,SetData] = useState<null|IDetectedBarcode[]>(null)
   const onScan = (data:IDetectedBarcode[]) => {
     SetData(data)
@@ -16,6 +16,5 @@ export default function page (){
   return(
     <div>
       <Ticket/>
-     </div>
-    )
+     </div>)
 }
