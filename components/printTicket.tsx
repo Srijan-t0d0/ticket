@@ -1,6 +1,5 @@
 "use client";
-import { Ticket } from "@/components/ticket";
-import { useEffect, useState } from "react";
+
 import { usePDF } from "react-to-pdf";
 
 export default function PrintTicket({

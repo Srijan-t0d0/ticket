@@ -2,6 +2,11 @@
 
 import { auth } from "./auth";
 import { prisma } from "./prisma";
+import { signIn as originalSignIn } from "./auth";
+
+export const signIn = async (...args: any[]) => {
+  return await originalSignIn(...args);
+};
 
 export async function getBookedSeats() {
   let bookedSeats: string[] = [];
@@ -38,7 +43,7 @@ export async function createBooking(
   let booking;
   try {
     booking = await prisma.bookings.create({
-      data: { seats, userId: user?.id! },
+      data: { seats, userId: user?.id!, attended: false },
     });
   } catch (e) {
     return { error: "Something went wrong", seats: [] };
@@ -50,11 +55,15 @@ export async function createBooking(
 export async function getPrintData() {
   let session = await auth();
   if (!session) return { error: "unauthorized", seats: [] };
-
-  const seat = await prisma.bookings.findFirst({
-    where: {
-      userId: session.user?.id,
-    },
+  const dbUser = await prisma.user.findFirst({
+    where: { email: session?.user?.email! },
   });
-  return { email: session.user?.email, seat: seat?.seats[0] };
+  const seat = await prisma.bookings.findFirst({
+    where: { userId: dbUser?.id },
+  });
+  return {
+    email: session.user?.email,
+    seat: seat?.seats[0],
+    bookingId: seat?.id,
+  };
 }

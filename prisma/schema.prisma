@@ -70,6 +70,7 @@ model Bookings {
   id        String   @id @default(uuid())
   userId    String
   seats     String[] // Array of seat numbers stored as strings
+  attended  Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

@@ -1,9 +1,13 @@
 import { getPrintData } from "@/actions";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import QRCode from "react-qr-code";
 
 export const Ticket = async () => {
-  const { email, seat } = await getPrintData();
+  const { email, seat, bookingId } = await getPrintData();
+  if (!email || !seat || !bookingId) {
+    redirect("/bookticket");
+  }
   return (
     <div className="flex w-[75rem] overflow-hidden">
       <div className="bg-[url('/ticketBackground.jpeg')]  bg-left h-96 w-[66.6%] relative p-2 z-[1]">
@@ -49,7 +53,7 @@ export const Ticket = async () => {
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
             viewBox={`0 0 256 256`}
-            value={JSON.stringify({ email: email, seat: seat })}
+            value={JSON.stringify({ email, seat, bookingId })}
           />
         </div>
       </div>

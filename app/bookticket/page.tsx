@@ -7,10 +7,14 @@ import { redirect } from "next/navigation";
 export default async function Page() {
   await Promise.all([auth()]);
   const user = await auth();
+  const dbUser = await prisma.user.findFirst({
+    where: { email: user?.user?.email! },
+  });
   const userBooked = await prisma.bookings.findFirst({
-    where: { userId: user?.user?.id },
+    where: { userId: dbUser?.id },
   });
   if (userBooked) {
+    console.log({ userBooked, user });
     redirect("/print-ticket");
   }
   const bookings = await getBookedSeats();
