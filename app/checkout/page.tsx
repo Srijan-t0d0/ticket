@@ -13,7 +13,7 @@ export default function Page() {
 }
 
 function Checkout() {
-  const seats = useSearchParams().get("seats");
+  const seats = useSearchParams().get("seat");
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   let bookings = [];
   useEffect(() => {
