@@ -1,12 +1,18 @@
 "use client";
 import { createBooking, getBookedSeats } from "@/actions";
-import { prisma } from "@/prisma";
 
-import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function Checkout() {
+export default function Page() {
+  return (
+    <Suspense>
+      <Checkout />
+    </Suspense>
+  );
+}
+
+function Checkout() {
   const seats = useSearchParams().get("seats");
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   let bookings = [];
@@ -30,12 +36,14 @@ export default function Checkout() {
   };
 
   return (
-    <div>
-      <h1>Checkout Page</h1>
-      <p>Selected Seats: {selectedSeats?.toString()}</p>
-      <p>Amount : {selectedSeats?.length * 40}</p>
-      <button onClick={handleClick}>Confirm</button>
-      {/* Your checkout logic here */}
-    </div>
+    <Suspense>
+      <div>
+        <h1>Checkout Page</h1>
+        <p>Selected Seats: {selectedSeats?.toString()}</p>
+        <p>Amount : {selectedSeats?.length * 40}</p>
+        <button onClick={handleClick}>Confirm</button>
+        {/* Your checkout logic here */}
+      </div>
+    </Suspense>
   );
 }
