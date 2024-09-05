@@ -32,7 +32,7 @@ export default function Page() {
   };
 
   return (
-    <div className=" p-4 flex flex-col h-screen w-screen justify-center align-middle items-center ps-6">
+    <div className=" p-4 flex flex-col h-screen w-screen justify-center lg:align-middle lg:items-center ps-6">
       <div className="mb-40 relative w-[780px] flex justify-center  align-middle">
         <div className="absolute w-[780px] transitiona-all  opacity-100 -inset-px bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] rounded-xl blur-lg"></div>
         <div className="relative w-[780px] flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 font-pj rounded-xl ">
@@ -42,7 +42,7 @@ export default function Page() {
 
       {rows.map((r) => (
         <div className="flex gap-5 " key={`row-${r}`}>
-          <div className="inline-flex">
+          <div className="flex">
             <Seat
               booked={bookings.includes(String((r - 1) * 14 + 1))}
               handleClick={handleClick}
@@ -56,7 +56,7 @@ export default function Page() {
               number={(r - 1) * 14 + 2}
             />
           </div>
-          <div className="inline-flex">
+          <div className="flex">
             <Seat
               booked={bookings.includes(String((r - 1) * 14 + 3))}
               handleClick={handleClick}
@@ -70,7 +70,7 @@ export default function Page() {
               number={(r - 1) * 14 + 4}
             />
           </div>
-          <div className="inline-flex">
+          <div className="flex">
             <Seat
               booked={bookings.includes(String((r - 1) * 14 + 5))}
               handleClick={handleClick}
