@@ -2,23 +2,33 @@
 import { MdEventSeat } from "react-icons/md";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { getBookedSeats } from "@/actions";
 
 export default function Page() {
   const rows = [1, 2, 3, 4, 5, 6];
+  const [bookings, setBookings] = useState<string[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<number[]>([]);
 
   useEffect(() => {
+    getBookedSeats().then((val) => {
+      setBookings(val);
+    });
+  }, []);
+
+  useEffect(() => {
     console.log(selectedSeat);
-  }, [selectedSeat]);
+  }, [selectedSeat, bookings]);
 
   const handleClick = (number: number) => {
-    setSelectedSeat((prevSelected) => {
-      if (prevSelected.includes(number)) {
-        return prevSelected.filter((seat) => seat !== number);
-      } else {
-        return [...prevSelected, number];
-      }
-    });
+    if (!bookings.includes(number.toString())) {
+      setSelectedSeat((prevSelected) => {
+        if (prevSelected.includes(number)) {
+          return prevSelected.filter((seat) => seat !== number);
+        } else {
+          return [...prevSelected, number];
+        }
+      });
+    }
   };
 
   return (
@@ -34,11 +44,13 @@ export default function Page() {
         <div className="flex gap-5 " key={`row-${r}`}>
           <div className="inline-flex">
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 1))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 1)}
               number={(r - 1) * 14 + 1}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 2))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 2)}
               number={(r - 1) * 14 + 2}
@@ -46,11 +58,13 @@ export default function Page() {
           </div>
           <div className="inline-flex">
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 3))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 3)}
               number={(r - 1) * 14 + 3}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 4))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 4)}
               number={(r - 1) * 14 + 4}
@@ -58,21 +72,25 @@ export default function Page() {
           </div>
           <div className="inline-flex">
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 5))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 5)}
               number={(r - 1) * 14 + 5}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 6))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 6)}
               number={(r - 1) * 14 + 6}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 7))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 7)}
               number={(r - 1) * 14 + 7}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 8))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 8)}
               number={(r - 1) * 14 + 8}
@@ -80,21 +98,25 @@ export default function Page() {
           </div>
           <div className="flex">
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 9))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 9)}
               number={(r - 1) * 14 + 9}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 10))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 10)}
               number={(r - 1) * 14 + 10}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 11))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 11)}
               number={(r - 1) * 14 + 11}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 12))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 12)}
               number={(r - 1) * 14 + 12}
@@ -102,11 +124,13 @@ export default function Page() {
           </div>
           <div className="flex">
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 13))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 13)}
               number={(r - 1) * 14 + 13}
             />
             <Seat
+              booked={bookings.includes(String((r - 1) * 14 + 14))}
               handleClick={handleClick}
               selected={selectedSeat.includes((r - 1) * 14 + 14)}
               number={(r - 1) * 14 + 14}
@@ -114,34 +138,39 @@ export default function Page() {
           </div>
         </div>
       ))}
-      <Link
-        className="w-fit mt-10 bg-teal-500 px-4 py-2  rounded-md"
-        href={{
-          pathname: "/checkout",
-          query: { seats: selectedSeat.join(",") },
-        }}
-      >
-        Checkout
-      </Link>
+      {!!selectedSeat.length && (
+        <Link
+          className={`rounded-lg mt-10 text-slate-800 bg-teal-500 active:border border-teal-300 px-3 py-2 font-bold hover:bg-teal-300 active:text-white`}
+          href={{
+            pathname: "/checkout",
+            query: { seats: selectedSeat.join(",") },
+          }}
+        >
+          Checkout
+        </Link>
+      )}
     </div>
   );
 }
 
 interface SeatProps {
+  booked: boolean;
   number: number;
   handleClick: (number: number) => void;
   selected?: boolean;
 }
 
-const Seat = ({ number, handleClick, selected }: SeatProps) => {
+const Seat = ({ number, handleClick, selected, booked }: SeatProps) => {
   return (
     <div
-      className="relative  hover:cursor-pointer"
+      className={`relative  hover:cursor-pointer ${
+        booked ? "hover:cursor-not-allowed" : ""
+      }`}
       onClick={() => handleClick(number)}
     >
       <MdEventSeat
         size={50}
-        fill={selected ? "#8888FF" : "#ffffff"} //
+        fill={booked ? "#555555" : selected ? "#8888FF" : "#ffffff"} //
       />
 
       <div
