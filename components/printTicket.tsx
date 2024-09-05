@@ -11,7 +11,7 @@ export default function PrintTicket({
   const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   return (
-    <div className="flex align-middle items-center flex-col">
+    <div className=" s">
       <div ref={targetRef} className="border w-[75rem] print-backdrop-fix">
         {children}
       </div>
