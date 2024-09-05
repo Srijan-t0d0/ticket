@@ -1,20 +1,19 @@
-"use client"
-import { QRScanner } from "@/components/QRScanner";
-import { Ticket } from "@/components/ticket";
-import { Button } from "@/components/ui/button";
-import { IDetectedBarcode } from "@yudiel/react-qr-scanner";
-import { stringify } from "querystring";
-import { useState } from "react";
+"use client";
+import { Scanner, centerText } from "@yudiel/react-qr-scanner";
 
-export default function PAGE() {
-  const [data,SetData] = useState<null|IDetectedBarcode[]>(null)
-  const onScan = (data:IDetectedBarcode[]) => {
-    SetData(data)
-    console.log(data)
-  }
-
-  return(
-    <div>
-      <Ticket/>
-     </div>)
+export default function Page() {
+  return (
+    <Scanner
+      components={{
+        audio: true,
+        onOff: true,
+        torch: true,
+        zoom: true,
+        finder: true,
+        tracker: centerText,
+      }}
+      allowMultiple={true}
+      onScan={(result) => console.log(result)}
+    />
+  );
 }

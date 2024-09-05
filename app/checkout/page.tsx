@@ -1,7 +1,7 @@
 "use client";
 import { createBooking, getBookedSeats } from "@/actions";
 
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 export default function Page() {
@@ -13,6 +13,7 @@ export default function Page() {
 }
 
 function Checkout() {
+  const router = useRouter();
   const seats = useSearchParams().get("seat");
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   let bookings = [];
@@ -30,8 +31,10 @@ function Checkout() {
     const newBooking = await createBooking(selectedSeats);
     if (newBooking.error) {
       alert(newBooking.error + seats?.toString());
+      router.back();
     } else {
       alert("successfully booked" + newBooking.seats);
+      router.push("/print-ticket");
     }
   };
 

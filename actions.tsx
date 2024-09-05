@@ -46,3 +46,15 @@ export async function createBooking(
   console.log({ booking });
   return { error: "", seats: booking.seats };
 }
+
+export async function getPrintData() {
+  let session = await auth();
+  if (!session) return { error: "unauthorized", seats: [] };
+
+  const seat = await prisma.bookings.findFirst({
+    where: {
+      userId: session.user?.id,
+    },
+  });
+  return { email: session.user?.email, seat: seat?.seats[0] };
+}

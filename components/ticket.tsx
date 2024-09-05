@@ -1,6 +1,9 @@
+import { getPrintData } from "@/actions";
 import Image from "next/image";
+import QRCode from "react-qr-code";
 
-export const Ticket = () => {
+export const Ticket = async () => {
+  const { email, seat } = await getPrintData();
   return (
     <div className="flex w-[75rem] overflow-hidden">
       <div className="bg-[url('/ticketBackground.jpeg')]  bg-left h-96 w-[66.6%] relative p-2 z-[1]">
@@ -29,19 +32,26 @@ export const Ticket = () => {
         </div>
         <div className="absolute text-white flex gap-3 bottom-5 left-1/2 -translate-x-1/2 divide-x divide-dashed">
           <div>ROW : 1</div>
-          <div className="px-2">SEAT NUMBER : 12</div>
+          <div className="px-2">SEAT NUMBER : {seat!.toString()}</div>
         </div>
       </div>
-      <div className="bg-slate-800 relative flex-1">
+      <div className="bg-slate-500 relative flex-1">
         <div className="left-12 top-20 absolute">
-          <div className="h-16 w-52 text-center font-semibold text-lg text-yellow-300 text-opacity-75 bg-red-500  p-2">
+          <div className="h-16 w-52 text-center font-semibold text-lg text-yellow-100 text-opacity-75 bg-red-700  p-2">
             Sep 6, 2024
             <br />
             8:30 PM
           </div>
           <div className="pt-2 text-white">THEATRE : 11AC3027</div>
         </div>
-        <div className="size-40 bg-white absolute bottom-2 right-2">QRCODE</div>
+        <div className="size-48 bg-white absolute bottom-2 right-2">
+          <QRCode
+            size={256}
+            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+            viewBox={`0 0 256 256`}
+            value={JSON.stringify({ email: email, seat: seat })}
+          />
+        </div>
       </div>
     </div>
   );
