@@ -14,8 +14,7 @@ export async function getBookedSeats() {
   bookings.forEach((b) => {
     bookedSeats = bookedSeats.concat(b.seats);
   });
-  console.log(bookedSeats);
-  console.log(bookedSeats.length);
+
   return bookedSeats;
 }
 
@@ -48,22 +47,22 @@ export async function createBooking(
   } catch (e) {
     return { error: "Something went wrong", seats: [] };
   }
-  console.log({ booking });
+
   return { error: "", seats: booking.seats };
 }
 
-export async function getPrintData() {
+export async function getBookingData() {
   let session = await auth();
-  if (!session) return { error: "unauthorized", seats: [] };
-  const dbUser = await prisma.user.findFirst({
-    where: { email: session?.user?.email! },
+  console.log(session);
+
+  if (!session) return { error: "unauthorized" };
+
+  const booking = await prisma.bookings.findFirst({
+    where: { userId: session.user?.id },
   });
-  const seat = await prisma.bookings.findFirst({
-    where: { userId: dbUser?.id },
-  });
+  console.error("getPrintData", { booking }, { session });
   return {
-    email: session.user?.email,
-    seat: seat?.seats[0],
-    bookingId: seat?.id,
+    user: session.user,
+    booking,
   };
 }
