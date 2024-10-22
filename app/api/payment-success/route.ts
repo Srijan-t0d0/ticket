@@ -71,7 +71,10 @@ export async function POST(request: NextRequest) {
     ]);
     console.log({ updatedOrder, booking });
 
-    return NextResponse.redirect(new URL("/print-ticket", request.url));
+    const printTicketUrl = new URL("/print-ticket", request.url);
+    printTicketUrl.search = ""; // Clear query string if any
+
+    return NextResponse.redirect(printTicketUrl);
   }
 
   return NextResponse.json({
