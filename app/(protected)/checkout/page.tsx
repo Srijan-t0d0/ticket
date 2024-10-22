@@ -49,7 +49,7 @@ function Checkout({ selectedSeats }: { selectedSeats: number[] }) {
       name: "Astra Za",
       description: "Test Transaction",
       order_id: orderId, // This is the order_id created in the backend
-      callback_url: "http://localhost:3000/api/payment-success", // Your success URL
+      callback_url: ` ${process.env.NEXT_PUBLIC_AUTH_URL}/api/payment-success`, // Your success URL
       redirect: true,
       prefill: {
         name: "Gaurav Kumar",
