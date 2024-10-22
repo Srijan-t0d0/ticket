@@ -48,20 +48,38 @@ export async function POST(request: NextRequest) {
         paymentStatus: "pending",
       },
     });
-    if (!order) return;
-    const booking = await prisma.bookings.create({
+    if (!order) return NextResponse.json(null, { status: 404 });
+    let updatedOrderPromise = prisma.orders.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentStatus: "success",
+      },
+    });
+    let bookingPromise = prisma.bookings.create({
       data: {
         userId: order?.userId || "",
         attended: false,
         seats: [order.seatNumber],
       },
     });
-    console.log({ order, booking });
 
-    return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_AUTH_URL}/print-ticket`
+    const [updatedOrder, booking] = await Promise.all([
+      updatedOrderPromise,
+      bookingPromise,
+    ]);
+    console.log({ updatedOrder, booking });
+
+    return NextResponse.json(
+      JSON.stringify({ order, booking: bookingPromise }),
+      {
+        status: 200,
+      }
     );
   }
 
-  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_AUTH_URL}/`);
+  return NextResponse.json({
+    message: "trying to fool me?",
+  });
 }

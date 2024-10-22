@@ -54,9 +54,6 @@ function Checkout({ selectedSeats }: { selectedSeats: number[] }) {
       theme: {
         color: "#F37254",
       },
-      notes: {
-        testnote: "This is a test note",
-      },
     };
     //@ts-expect-error
     const rzp = new window.Razorpay(options);
