@@ -4,17 +4,23 @@ import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/dist/server/api-utils";
 import { useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useSession, SessionProvider } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-export default function ErrorPage() {
+const page = () => {
+  return (
+    <SessionProvider>
+      <ErrorPage />
+    </SessionProvider>
+  );
+};
+export default page;
+
+function ErrorPage() {
   const router = useRouter();
-  useEffect(() => {
-    signOut();
-  });
 
   const session = useSession();
-  if (session?.data?.user) return router.push("/book-ticket");
+  if (session?.data?.user) router.push("/bookticket");
   return (
     <div className="h-screen bg-slate-900 w-screen flex justify-center items-center">
       <div className="bg-black p-5 rounded-lg flex flex-col justify-center items-center gap-4">
