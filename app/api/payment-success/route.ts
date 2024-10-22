@@ -71,12 +71,7 @@ export async function POST(request: NextRequest) {
     ]);
     console.log({ updatedOrder, booking });
 
-    return NextResponse.json(
-      JSON.stringify({ order, booking: bookingPromise }),
-      {
-        status: 200,
-      }
-    );
+    return NextResponse.redirect(new URL("/print-ticket", request.url));
   }
 
   return NextResponse.json({
