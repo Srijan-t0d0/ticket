@@ -1,8 +1,13 @@
 "use client";
 import { signIn } from "@/actions";
+import { signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 export default function ErrorPage() {
+  useEffect(() => {
+    signOut();
+  });
   return (
     <div className="h-screen bg-slate-900 w-screen flex justify-center items-center">
       <div className="bg-black p-5 rounded-lg flex flex-col justify-center items-center gap-4">
