@@ -44,17 +44,13 @@ function Checkout({ selectedSeats }: { selectedSeats: number[] }) {
     const orderId = await createOrderId();
     const options = {
       key: process.env.NEXT_PUBLIC_RP_key_id, // Replace with your Razorpay key_id
-      amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      amount: "4000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       currency: "INR",
-      name: "Astra Za",
-      description: "Test Transaction",
+
       order_id: orderId, // This is the order_id created in the backend
       callback_url: ` ${process.env.NEXT_PUBLIC_AUTH_URL}/api/payment-success`, // Your success URL
       redirect: true,
-      prefill: {
-        name: "Gaurav Kumar",
-        email: "gaurav.kumar@example.com",
-      },
+
       theme: {
         color: "#F37254",
       },
