@@ -13,7 +13,7 @@ export const Ticket = async () => {
 
   return (
     <div className="flex">
-      <div className="bg-[url('/ticketBackground.jpeg')]  bg-left flex flex-1 relative z-[1] overflow-hidden">
+      <div className="bg-[url('/ticketBackground.png')]  bg-left flex flex-1 relative z-[1] overflow-hidden">
         <div className="h-full ticket-overlay absolute w-full backdrop-blur-sm backdrop brightness-50 -z-10"></div>
         <div className="flex flex-col">
           <Image

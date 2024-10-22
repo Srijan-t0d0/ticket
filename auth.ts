@@ -7,9 +7,9 @@ import { AccessDenied, AuthError } from "@auth/core/errors";
 export const authConfig: NextAuthConfig = {
   providers: [Google],
   callbacks: {
-    // signIn({ account, profile, user }) {
-    //   return !!user.email?.endsWith("@iitjammu.ac.in");
-    // },
+    signIn({ account, profile, user }) {
+      return !!user.email?.endsWith("@iitjammu.ac.in");
+    },
     session({ session, token }) {
       session.user.id = token.sub!;
       return session;
