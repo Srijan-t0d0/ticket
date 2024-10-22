@@ -58,8 +58,10 @@ export async function POST(request: NextRequest) {
     });
     console.log({ order, booking });
 
-    return NextResponse.redirect(`${request.nextUrl.host}/print-ticket`);
+    return NextResponse.redirect(
+      `${process.env.NEXT_PUBLIC_AUTH_URL}/print-ticket`
+    );
   }
 
-  return NextResponse.redirect(`${request.nextUrl.host}/`);
+  return NextResponse.redirect(`${process.env.NEXT_PUBLIC_AUTH_URL}/`);
 }
