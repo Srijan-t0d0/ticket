@@ -5,7 +5,6 @@ import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 
 export default async function Page() {
-  const session = await auth();
   const { booking } = await getBookingData();
   if (booking) {
     redirect("/print-ticket");

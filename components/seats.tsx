@@ -4,18 +4,20 @@ import { getBookedSeats } from "@/actions";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { MdEventSeat } from "react-icons/md";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { useSeatContext } from "./SeatProvider";
 
 interface Props {
   bookings: string[];
 }
 
 export const Seats = ({ bookings }: Props) => {
+  const router = useRouter();
   const rows = [1, 2, 3, 4, 5, 6];
-  const [selectedSeat, setSelectedSeat] = useState<number[]>([]);
 
-  useEffect(() => {
-    console.log(selectedSeat);
-  }, [selectedSeat, bookings]);
+  const { selectedSeats: selectedSeat, setSelectedSeats: setSelectedSeat } =
+    useSeatContext();
 
   const handleClick = (number: number) => {
     if (!bookings.includes(number.toString())) {
@@ -134,17 +136,14 @@ export const Seats = ({ bookings }: Props) => {
           </div>
         </div>
       ))}
-      {!!selectedSeat.length && (
-        <Link
-          className={`rounded-lg mt-10 text-slate-800 bg-teal-500 active:border border-teal-300 px-3 py-2 font-bold hover:bg-teal-300 active:text-white`}
-          href={{
-            pathname: "/checkout",
-            query: { seat: selectedSeat.join(",") },
-          }}
-        >
-          Checkout
-        </Link>
-      )}
+
+      <Button
+        onClick={() => router.push("/checkout")}
+        disabled={!selectedSeat[0]}
+        className="m-5"
+      >
+        Checkout
+      </Button>
     </div>
   );
 };

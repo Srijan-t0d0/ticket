@@ -22,6 +22,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  orders     Orders[]
   bookings  Bookings[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -75,4 +76,16 @@ model Bookings {
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Orders {
+  id            String   @id @default(cuid()) // Generating unique ID for orders
+  userId        String   // Relation to User
+  seatNumber    String   // Storing seat number as a string
+  paymentStatus String   // Enum-like payment status ['progress', 'paid']
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

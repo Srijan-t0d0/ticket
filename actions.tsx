@@ -53,7 +53,7 @@ export async function createBooking(
 
 export async function getBookingData() {
   let session = await auth();
-  console.log(session);
+  console.log("actions.tsx -> get booking data", { session });
 
   if (!session) return { error: "unauthorized" };
 
