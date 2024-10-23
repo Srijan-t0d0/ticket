@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
   const session = await auth();
   console.log("api/order", { user: session?.user });
 
-  if (!session?.user) return Response.redirect("/api/auth/signin");
   const { amount, seat } = (await request.json()) as {
     amount: string;
     seat: string[];
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
       id: order.id,
       paymentStatus: "pending",
       seatNumber: seat[0].toString(),
-      userId: session.user.id || "",
+      userId: session?.user?.id || "",
     },
   });
   console.log("api/order", { order, dbOrder });
