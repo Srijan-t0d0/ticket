@@ -3,10 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma";
 import { auth } from "@/auth";
 
-const razorpay = new Razorpay({
-  key_id: process.env.RP_key_id!,
-  key_secret: process.env.RP_key_secret,
-});
 type Order = {
   amount: number;
   amount_due: number;
@@ -23,6 +19,10 @@ type Order = {
 };
 
 export async function POST(request: NextRequest) {
+  const razorpay = new Razorpay({
+    key_id: process.env.NEXT_PUBLIC_RP_key_id!,
+    key_secret: process.env.RP_key_secret,
+  });
   const session = await auth();
   console.log("api/order", { user: session?.user });
 
