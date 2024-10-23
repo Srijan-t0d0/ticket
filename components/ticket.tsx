@@ -51,7 +51,7 @@ export const Ticket = async () => {
       <div className="bg-slate-500 flex flex-col px-12 py-10 justify-center items-center gap-4">
         <div className="flex flex-col justify-center items-center gap-5">
           <div className="p-2 px-6 text-center font-semibold text-lg text-yellow-100 text-opacity-75 bg-red-700  ">
-            Sep 6, 2024
+            Oct 25, 2024
             <br />
             8:30 PM
           </div>
