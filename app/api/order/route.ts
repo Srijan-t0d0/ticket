@@ -24,11 +24,15 @@ type Order = {
 
 export async function POST(request: NextRequest) {
   const session = await auth();
-  if (!session?.user) return NextResponse.json(null, { status: 401 });
+  console.log("api/order", { user: session?.user });
+
+  if (!session?.user) return Response.redirect("/api/auth/signin");
   const { amount, seat } = (await request.json()) as {
     amount: string;
     seat: string[];
   };
+  console.log("/api/order", { amount, seat });
+
   if (!seat) return NextResponse.json(null, { status: 400 });
 
   var options = {

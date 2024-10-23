@@ -15,6 +15,12 @@ function validateRazorpayParams(params: URLSearchParams): RazorpayParams {
   const razorpay_order_id = params.get("razorpay_order_id");
   const razorpay_signature = params.get("razorpay_signature");
 
+  console.log("validate razorpay params", {
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature,
+  });
+
   if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
     throw new Error("Invalid Razorpay params");
   }
@@ -29,6 +35,7 @@ function validateRazorpayParams(params: URLSearchParams): RazorpayParams {
 export async function POST(request: NextRequest) {
   const queryString = await request.text();
   const rpParams = new URLSearchParams(queryString);
+  console.log("/payment-success", { rpParams, queryString });
 
   // Force to RazorpayParams type
   const razorpayParams = validateRazorpayParams(rpParams);
