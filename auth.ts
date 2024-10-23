@@ -8,6 +8,8 @@ export const authConfig: NextAuthConfig = {
   providers: [Google],
   callbacks: {
     signIn({ account, profile, user }) {
+      const allowed = ["chaturchacharost@gmail.com", "srijandev01@gmail.com"];
+      if (allowed.includes(user.email || "")) return true;
       return !!user.email?.endsWith("@iitjammu.ac.in");
     },
     session({ session, token }) {
