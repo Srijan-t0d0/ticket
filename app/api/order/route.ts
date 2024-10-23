@@ -38,7 +38,9 @@ export async function POST(request: NextRequest) {
     amount: amount,
     currency: "INR",
   };
+  console.log("/api/order", { options });
   const order = await razorpay.orders.create(options);
+  console.log("/api/order", { order });
   const dbOrder = await prisma.orders.create({
     data: {
       id: order.id,
