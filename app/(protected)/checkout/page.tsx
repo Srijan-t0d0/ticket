@@ -30,21 +30,19 @@ function Checkout({ selectedSeats }: { selectedSeats: number[] }) {
   };
 
   return (
-    <Suspense>
-      <div className="h-screen w-full flex flex-col items-center justify-center">
-        <div className="p-5 border-2 border-gray-500 flex flex-col gap-2 min-w-96 rounded-3xl shadow-lg ">
-          <h1 className="text-4xl font-bold my-2"> Checkout</h1>
-          <hr></hr>
-          <p>Selected Seat: {selectedSeats?.toString()}</p>
-          <button
-            disabled={loading}
-            className="bg-teal-600 p-2 m-2 rounded-lg hover:bg-teal-700 active:bg-teal-900"
-            onClick={handleClick}
-          >
-            {loading ? "Loading...." : "Checkout"}
-          </button>
-        </div>
+    <div className="h-screen w-full flex flex-col items-center justify-center">
+      <div className="p-5 border-2 border-gray-500 flex flex-col gap-2 min-w-96 rounded-3xl shadow-lg ">
+        <h1 className="text-4xl font-bold my-2"> Checkout</h1>
+        <hr></hr>
+        <p>Selected Seat: {selectedSeats?.toString()}</p>
+        <button
+          disabled={loading}
+          className="bg-teal-600 p-2 m-2 rounded-lg hover:bg-teal-700 active:bg-teal-900"
+          onClick={handleClick}
+        >
+          {loading ? "Loading...." : "Checkout"}
+        </button>
       </div>
-    </Suspense>
+    </div>
   );
 }
