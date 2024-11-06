@@ -24,7 +24,7 @@ export default function home() {
           </span>
         </div>
         <div className="inline-block text-center font-semibold text-lg text-black bg-yellow-50 p-2">
-          Oct 25, 2024 | 8:30 PM | 11AC3027
+          Nov 9, 2024 | 8:30 PM | 11AC3027
         </div>
         <Link
           href={"/bookticket"}
