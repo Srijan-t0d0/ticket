@@ -10,6 +10,7 @@ export const Ticket = async () => {
   if (!seat) return redirect("/bookticket");
   const bookingId = booking?.id;
   const email = user?.email;
+  const name = user?.name || "No name";
 
   return (
     <div className="flex">
@@ -62,7 +63,7 @@ export const Ticket = async () => {
             size={256}
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
             viewBox={`0 0 256 256`}
-            value={JSON.stringify({ email, seat, bookingId })}
+            value={JSON.stringify({ name, email, seat })}
           />
         </div>
       </div>
