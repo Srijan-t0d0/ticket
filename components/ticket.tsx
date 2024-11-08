@@ -43,7 +43,7 @@ export const Ticket = async () => {
           </div>
           <div>
             <div className=" text-white flex flex-grow justify-center gap-3 bottom-5 ">
-              <div>ROW : {Math.round(Number(seat) / 14) + 1}</div>
+              <div>ROW : {Math.floor((parseInt(seat) - 1) / 14) + 1}</div>
               <div className="px-2">SEAT NUMBER : {seat}</div>
             </div>
           </div>
