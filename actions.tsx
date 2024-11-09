@@ -66,3 +66,20 @@ export async function getBookingData() {
     booking,
   };
 }
+
+export async function updateAttendance(email: string) {
+  console.log({ email });
+
+  const booking = await prisma.bookings.findFirst({
+    where: { user: { email: email || "" } },
+  });
+  console.log({ booking });
+
+  if (booking && !booking.attended) {
+    const updatedBooking = await prisma.bookings.update({
+      where: { id: booking.id },
+      data: { attended: true },
+    });
+    console.log({ updatedBooking });
+  }
+}

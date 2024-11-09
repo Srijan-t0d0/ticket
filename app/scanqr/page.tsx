@@ -1,10 +1,11 @@
 "use client";
+import { updateAttendance } from "@/actions";
 import {
   IDetectedBarcode,
   Scanner,
   centerText,
 } from "@yudiel/react-qr-scanner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const [tiketInfo, setTiketInfo] = useState<IDetectedBarcode[]>([]);
@@ -20,6 +21,11 @@ export default function Page() {
     console.error("Error parsing ticket information:", error);
     info = null; // Assign a default value or handle error as needed
   }
+
+  if (info?.email) {
+    updateAttendance(info.email);
+  }
+
   return (
     <div className="flex flex-col justify-center items-center ">
       <Scanner
